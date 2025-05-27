@@ -1,0 +1,19 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+// Load all .md files in this folder
+const posts = await Astro.glob("./*.md");
+
+// Find the one you want (here: "main.md")
+const post = posts.find((p) => p.file.includes("main.md"));
+
+if (!post) throw new Error("Post not found");
+
+const { default: Content, frontmatter } = post;
+---
+
+<Layout>
+  <h1>{frontmatter.title}</h1>
+  <p><em>{frontmatter.pubDate}</em> – {frontmatter.author}</p>
+  <Content />
+</Layout>
