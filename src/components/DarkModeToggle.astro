@@ -1,0 +1,60 @@
+---
+// Dark mode toggle button component
+---
+
+<!-- Switch Toggle for Dark Mode -->
+<label
+  class="relative inline-flex items-center cursor-pointer"
+  aria-label="Toggle dark mode"
+>
+  <input type="checkbox" id="theme-toggle" class="sr-only peer" />
+  <div
+    class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"
+  >
+  </div>
+</label>
+
+<script>
+  // Dark mode toggle functionality
+  const themeToggle = document.getElementById(
+    "theme-toggle"
+  ) as HTMLInputElement;
+  const darkIcon = document.getElementById("theme-toggle-dark-icon");
+  const lightIcon = document.getElementById("theme-toggle-light-icon");
+
+  // Check for saved theme preference or default to 'light'
+  const currentTheme = localStorage.getItem("theme") || "light";
+
+  // Set initial theme
+  if (currentTheme === "dark") {
+    document.documentElement.classList.add("dark");
+    if (themeToggle) themeToggle.checked = true;
+    darkIcon?.classList.remove("hidden");
+    lightIcon?.classList.add("hidden");
+  } else {
+    document.documentElement.classList.remove("dark");
+    if (themeToggle) themeToggle.checked = false;
+    darkIcon?.classList.add("hidden");
+    lightIcon?.classList.remove("hidden");
+  }
+
+  // Toggle theme function
+  function toggleTheme() {
+    const isDark = themeToggle?.checked || false;
+
+    if (isDark) {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+      darkIcon?.classList.remove("hidden");
+      lightIcon?.classList.add("hidden");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+      darkIcon?.classList.add("hidden");
+      lightIcon?.classList.remove("hidden");
+    }
+  }
+
+  // Add event listener
+  themeToggle?.addEventListener("change", toggleTheme);
+</script>
