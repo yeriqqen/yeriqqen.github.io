@@ -5,8 +5,11 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://yeriqqen.github.io',
+  base: '/resume',
   vite: {
     plugins: [tailwindcss()]
   },
-  integrations: [mdx()]
+  integrations: [mdx()],
+  trailingSlash: 'ignore'
 });
