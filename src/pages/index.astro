@@ -10,9 +10,13 @@ import Main from "../components/Main.astro";
 ---
 
 <Layout>
-  <div class="flex flex-row">
-    <Nav />
-    <Main />
+  <div class="flex flex-row h-screen">
+    <div class="flex-[2] bg-gray-100 dark:bg-gray-800">
+      <Nav />
+    </div>
+    <div class="flex-[5]">
+      <Main />
+    </div>
   </div>
 
   <!-- <Hero />
