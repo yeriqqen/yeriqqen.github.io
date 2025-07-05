@@ -1,0 +1,73 @@
+<nav class="h-full p-4">
+  <ul class="space-y-4">
+    <li>
+      <button
+        class="w-full text-left p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+        >Home</button
+      >
+    </li>
+    <li>
+      <button
+        id="searchToggle"
+        class="w-full text-left p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+        >Search</button
+      >
+      <ul id="mdFilesList" class="hidden mt-2 ml-4 space-y-2">
+        <li>
+          <button
+            data-file="main.md"
+            class="md-file-btn w-full text-left p-2 text-sm rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+            >Git</button
+          >
+        </li>
+        <li>
+          <button
+            data-file="about.md"
+            class="md-file-btn w-full text-left p-2 text-sm rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+            >Next</button
+          >
+        </li>
+        <li>
+          <button
+            data-file="projects.md"
+            class="md-file-btn w-full text-left p-2 text-sm rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+            >Nest</button
+          >
+        </li>
+        <li>
+          <button
+            data-file="contact.md"
+            class="md-file-btn w-full text-left p-2 text-sm rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+            >Docker</button
+          >
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+<script>
+  const searchToggle = document.getElementById("searchToggle");
+  const mdFilesList = document.getElementById("mdFilesList");
+
+  searchToggle?.addEventListener("click", () => {
+    mdFilesList?.classList.toggle("hidden");
+  });
+
+  const mdFileButtons = document.querySelectorAll(".md-file-btn");
+
+  mdFileButtons.forEach((button) => {
+    button.addEventListener("click", (e) => {
+      const target = e.target as HTMLButtonElement;
+      if (!target) return;
+
+      const fileName = target.getAttribute("data-file");
+      console.log(`Opening file: ${fileName}`);
+
+      mdFileButtons.forEach((btn) =>
+        btn.classList.remove("bg-blue-200", "dark:bg-blue-800")
+      );
+      target.classList.add("bg-blue-200", "dark:bg-blue-800");
+    });
+  });
+</script>

@@ -5,12 +5,23 @@ import About from "../components/About.astro";
 import Projects from "../components/Projects.astro";
 import Contact from "../components/Contact.astro";
 import Layout from "../layouts/Layout.astro";
+import Nav from "../components/Nav.astro";
+import Main from "../components/Main.astro";
 ---
 
 <Layout>
-  <Hero />
+  <div class="flex flex-row h-screen">
+    <div class="flex-[2] bg-gray-100 dark:bg-gray-800">
+      <Nav />
+    </div>
+    <div class="flex-[5]">
+      <Main />
+    </div>
+  </div>
+
+  <!-- <Hero />
   <SocialLinks />
   <About />
   <Projects />
-  <Contact />
+  <Contact /> -->
 </Layout>
