@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import DarkModeToggle from "../components/DarkModeToggle.astro";
 ---
 
 <html lang="en" class="h-full select-none">
@@ -8,9 +9,14 @@ import "../styles/global.css";
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
-    <title>Astro Basics</title>
+    <title>Tech Blog - Modern Web Development</title>
+    <meta
+      name="description"
+      content="A modern tech blog covering web development, programming best practices, and the latest in technology."
+    />
   </head>
   <body class="bg-white dark:bg-gray-900 transition-colors duration-300">
+    <DarkModeToggle />
     <slot />
   </body>
 </html>
