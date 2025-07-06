@@ -1,5 +1,6 @@
 ---
 import { getCollection } from "astro:content";
+import Blog from "./Blog.astro";
 
 // Get featured and recent posts
 const allPosts = await getCollection("blog");
@@ -67,6 +68,9 @@ const recentPosts = allPosts.slice(0, 6);
       }
     </div>
   </section>
+  {recentPosts.map((post) => (
+    <Blog post={post} />
+  ))}
 </main>
 
 <style>
