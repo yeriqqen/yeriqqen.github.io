@@ -7,6 +7,8 @@ export async function getStaticPaths() {
     params: { slug: post.id },
     props: { post },
   }));
+
+  const { post } = Astro.props;
 }
 
 const { post } = Astro.props;
