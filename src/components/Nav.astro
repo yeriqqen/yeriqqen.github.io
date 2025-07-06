@@ -1,73 +1,115 @@
-<nav class="h-full p-4">
-  <ul class="space-y-4">
-    <li>
-      <button
-        class="w-full text-left p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-        >Home</button
+---
+import { getCollection } from "astro:content";
+
+// Get all blog posts for the file list
+const allPosts = await getCollection("blog");
+const categories = await getCollection("categories");
+---
+
+<nav class="h-full p-4 border-r border-gray-200 dark:border-gray-700">
+  <div class="mb-6">
+    <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
+      Tech Blog
+    </h2>
+
+    <!-- Search Box -->
+    <div class="mb-4">
+      <div id="search-container" class="mb-4"></div>
+    </div>
+  </div>
+
+  <div class="space-y-6">
+    <!-- Home Section -->
+    <div>
+      <h3
+        class="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2"
       >
-    </li>
-    <li>
-      <button
-        id="searchToggle"
-        class="w-full text-left p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-        >Search</button
-      >
-      <ul id="mdFilesList" class="hidden mt-2 ml-4 space-y-2">
+        Navigation
+      </h3>
+      <ul class="space-y-1">
         <li>
-          <button
-            data-file="main.md"
-            class="md-file-btn w-full text-left p-2 text-sm rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
-            >Git</button
+          <a
+            href="/"
+            class="flex items-center px-2 py-1 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors"
           >
+            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"
+              ></path>
+            </svg>
+            Home
+          </a>
         </li>
         <li>
-          <button
-            data-file="about.md"
-            class="md-file-btn w-full text-left p-2 text-sm rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
-            >Next</button
+          <a
+            href="/blog"
+            class="flex items-center px-2 py-1 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors"
           >
-        </li>
-        <li>
-          <button
-            data-file="projects.md"
-            class="md-file-btn w-full text-left p-2 text-sm rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
-            >Nest</button
-          >
-        </li>
-        <li>
-          <button
-            data-file="contact.md"
-            class="md-file-btn w-full text-left p-2 text-sm rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
-            >Docker</button
-          >
+            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                fill-rule="evenodd"
+                d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z"
+                clip-rule="evenodd"></path>
+            </svg>
+            All Posts
+          </a>
         </li>
       </ul>
-    </li>
-  </ul>
+    </div>
+
+    <!-- Categories Section -->
+    <div>
+      <h3
+        class="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2"
+      >
+        Categories
+      </h3>
+      <ul class="space-y-1">
+        {categories.map((category) => <li>{category.id}</li>)}
+      </ul>
+    </div>
+
+    <!-- Recent Posts Section -->
+    <div>
+      <h3
+        class="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2"
+      >
+        Recent Posts
+      </h3>
+      <ul class="space-y-2">
+        {
+          allPosts.slice(0, 5).map((post) => (
+            <li>
+              <a
+                href={`/blog/${post.id}`}
+                class="block px-2 py-1 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors"
+              >
+                <div class="truncate">{post.data.title}</div>
+                <div class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                  {post.data.pubDate.toLocaleDateString()}
+                </div>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
 </nav>
 
 <script>
-  const searchToggle = document.getElementById("searchToggle");
-  const mdFilesList = document.getElementById("mdFilesList");
+  // @ts-ignore
+  import { PagefindUI } from "@pagefind/default-ui";
 
-  searchToggle?.addEventListener("click", () => {
-    mdFilesList?.classList.toggle("hidden");
-  });
-
-  const mdFileButtons = document.querySelectorAll(".md-file-btn");
-
-  mdFileButtons.forEach((button) => {
-    button.addEventListener("click", (e) => {
-      const target = e.target as HTMLButtonElement;
-      if (!target) return;
-
-      const fileName = target.getAttribute("data-file");
-      console.log(`Opening file: ${fileName}`);
-
-      mdFileButtons.forEach((btn) =>
-        btn.classList.remove("bg-blue-200", "dark:bg-blue-800")
-      );
-      target.classList.add("bg-blue-200", "dark:bg-blue-800");
-    });
+  // Initialize Pagefind UI
+  new PagefindUI({
+    element: "#search-container",
+    showSubResults: true,
+    showImages: false,
+    pageSize: 5,
+    translations: {
+      placeholder: "Search posts...",
+      zero_results: "No posts found for [SEARCH_TERM]",
+    },
   });
 </script>

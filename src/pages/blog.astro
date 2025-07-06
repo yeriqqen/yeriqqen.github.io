@@ -1,0 +1,122 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../layouts/Layout.astro";
+import Nav from "../components/Nav.astro";
+
+const allPosts = await getCollection("blog");
+const sortedPosts = allPosts.sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+---
+
+<Layout>
+  <div class="flex flex-row h-screen">
+    <div class="flex-[2] bg-gray-100 dark:bg-gray-800">
+      <Nav />
+    </div>
+    <div class="flex-[5]">
+      <main class="h-full p-6 overflow-y-auto">
+        <!-- Header -->
+        <div class="mb-8">
+          <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">
+            All Blog Posts
+          </h1>
+          <p class="text-lg text-gray-600 dark:text-gray-400">
+            {allPosts.length} posts about web development, programming, and technology.
+          </p>
+        </div>
+
+        <!-- Posts Grid -->
+        <div class="space-y-6">
+          {
+            sortedPosts.map((post) => (
+              <article
+                data-pagefind-body
+                class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6 hover:shadow-md transition-shadow"
+              >
+                <div class="flex items-start justify-between">
+                  <div class="flex-1">
+                    <div class="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-2">
+                      <time datetime={post.data.pubDate.toISOString()}>
+                        {post.data.pubDate.toLocaleDateString("en-US", {
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                        })}
+                      </time>
+                    </div>
+
+                    <h2
+                      data-pagefind-meta="title"
+                      class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2"
+                    >
+                      <a
+                        href={`/blog/${post.id}`}
+                        class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                      >
+                        {post.data.title}
+                      </a>
+                    </h2>
+
+                    <p
+                      data-pagefind-meta="description"
+                      class="text-gray-600 dark:text-gray-300 mb-4"
+                    >
+                      {post.data.description}
+                    </p>
+
+                    <div class="flex items-center justify-between">
+                      <a
+                        href={`/blog/${post.id}`}
+                        class="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200 font-medium text-sm transition-colors"
+                      >
+                        Read more →
+                      </a>
+                    </div>
+                  </div>
+
+                  {post.data.image && (
+                    <div class="ml-6 flex-shrink-0">
+                      <img
+                        src={post.data.image.url}
+                        alt={post.data.image.alt}
+                        class="w-32 h-32 object-cover rounded-lg"
+                        loading="lazy"
+                      />
+                    </div>
+                  )}
+                </div>
+              </article>
+            ))
+          }
+        </div>
+
+        {
+          sortedPosts.length === 0 && (
+            <div class="text-center py-12">
+              <div class="text-gray-400 dark:text-gray-500 mb-4">
+                <svg
+                  class="w-16 h-16 mx-auto"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </div>
+              <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2">
+                No posts found
+              </h3>
+              <p class="text-gray-600 dark:text-gray-400">
+                Check back later for new content!
+              </p>
+            </div>
+          )
+        }
+      </main>
+    </div>
+  </div>
+</Layout>
