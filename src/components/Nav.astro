@@ -1,5 +1,6 @@
 ---
 import { getCollection } from "astro:content";
+import DarkModeToggle from "./DarkModeToggle.astro";
 
 // Get all blog posts for the file list
 const allPosts = await getCollection("blog");
@@ -8,11 +9,12 @@ const categories = await getCollection("categories");
 const { activePage } = Astro.props;
 ---
 
-<nav class="h-full p-4 border-r border-gray-200 dark:border-gray-700">
+<nav
+  class="h-full p-4 border-r border-gray-200 dark:border-gray-700 text-black dark:text-white"
+>
+  <DarkModeToggle class="mb-4" />
   <div class="mb-6">
-    <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
-      Tech Blog
-    </h2>
+    <h2 class="text-lg font-semibold text-gray-900 mb-4">Tech Blog</h2>
 
     <!-- Search Box -->
     <div class="mb-4">
@@ -23,14 +25,12 @@ const { activePage } = Astro.props;
   <div class="space-y-6">
     <!-- Home Section -->
     <div>
-      <h3
-        class="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2"
-      >
+      <h3 class="text-sm font-medium uppercase tracking-wider mb-2">
         Navigation
       </h3>
       <a
         href="/"
-        class="flex items-center px-2 py-1 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors"
+        class="flex items-center px-2 py-1 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors"
       >
         <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
           <path
@@ -43,9 +43,7 @@ const { activePage } = Astro.props;
 
     <!-- Categories Section -->
     <div>
-      <h3
-        class="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2"
-      >
+      <h3 class="text-sm font-medium uppercase tracking-wider mb-2">
         Categories
       </h3>
       <ul class="space-y-1">
@@ -55,9 +53,7 @@ const { activePage } = Astro.props;
 
     <!-- Recent Posts Section -->
     <div>
-      <h3
-        class="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2"
-      >
+      <h3 class="text-sm font-medium uppercase tracking-wider mb-2">
         Recent Posts
       </h3>
       <ul class="space-y-2">
@@ -66,10 +62,10 @@ const { activePage } = Astro.props;
             <li>
               <a
                 href={`/blog/${post.id}`}
-                class="block px-2 py-1 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors"
+                class="block px-2 py-1 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors"
               >
                 <div class="truncate">{post.data.title}</div>
-                <div class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                <div class="text-xs mt-1">
                   {post.data.pubDate.toLocaleDateString()}
                 </div>
               </a>
