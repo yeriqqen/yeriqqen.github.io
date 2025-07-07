@@ -1,8 +1,9 @@
 ---
 import { getCollection } from "astro:content";
+const allPosts = await getCollection("blog");
 import Post from "./Post.astro";
 
-const { activePage } = Astro.props;
+let { activePage } = Astro.props;
 ---
 
 <main class="h-full p-6 overflow-y-auto">
@@ -15,7 +16,7 @@ const { activePage } = Astro.props;
 
   <!-- Recent Posts -->
 
-  <Post post={activePage} />
+  <Post post={allPosts[0]} />
 </main>
 
 <style>

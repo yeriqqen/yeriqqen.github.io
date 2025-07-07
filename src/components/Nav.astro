@@ -4,6 +4,8 @@ import { getCollection } from "astro:content";
 // Get all blog posts for the file list
 const allPosts = await getCollection("blog");
 const categories = await getCollection("categories");
+
+const { activePage } = Astro.props;
 ---
 
 <nav class="h-full p-4 border-r border-gray-200 dark:border-gray-700">

@@ -3,7 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import Nav from "../components/Nav.astro";
 import Main from "../components/Main.astro";
 
-var activePage = '/';
+var activePage = "/";
 
 const setActivePage = (page: string) => {
   activePage = page;
@@ -13,10 +13,10 @@ const setActivePage = (page: string) => {
 <Layout>
   <div class="flex flex-row h-screen">
     <div class="bg-gray-100 dark:bg-gray-800">
-      <Nav activePage={activePage} @navigate:{setActivePage}/>
+      <Nav activePage={activePage} />
     </div>
     <div class="">
-      <Main activePage={activePage}/>
+      <Main activePage={activePage} />
     </div>
   </div>
 </Layout>
