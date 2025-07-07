@@ -1,18 +1,8 @@
----
-import { getCollection } from "astro:content";
-import DarkModeToggle from "./DarkModeToggle.astro";
-
-// Get all blog posts for the file list
-const allPosts = await getCollection("blog");
-const categories = await getCollection("categories");
-
-const { activePage } = Astro.props;
----
-
-<nav
+<template>
+  <nav
   class="h-full p-4 border-r border-gray-200 dark:border-gray-700 text-black dark:text-white"
 >
-  <DarkModeToggle class="mb-4" />
+  <!-- Dark Mode Toggle would go here, but we'll handle it in Astro -->
   <div class="mb-6">
     <h2 class="text-lg font-semibold text-gray-900 mb-4">Tech Blog</h2>
 
@@ -46,9 +36,9 @@ const { activePage } = Astro.props;
       <h3 class="text-sm font-medium uppercase tracking-wider mb-2">
         Categories
       </h3>
-      <ul class="space-y-1">
-        {categories.map((category) => <li>{category.id}</li>)}
-      </ul>
+     <ul>
+          <li v-for="category in (categories || [])" @click="handleClick(category.id)" :key="category.id">{{ category.id }}</li>
+        </ul>
     </div>
 
     <!-- Recent Posts Section -->
@@ -57,39 +47,64 @@ const { activePage } = Astro.props;
         Recent Posts
       </h3>
       <ul class="space-y-2">
-        {
-          allPosts.slice(0, 5).map((post) => (
-            <li>
+             <li v-for="post in (posts || []).slice(0, 5)" :key="post.id">
               <a
-                href={`/blog/${post.id}`}
+                :href="`/blog/${post.id}`"
                 class="block px-2 py-1 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors"
               >
-                <div class="truncate">{post.data.title}</div>
+                <div class="truncate">{{ post.data.title }}</div>
                 <div class="text-xs mt-1">
-                  {post.data.pubDate.toLocaleDateString()}
+                  {{ new Date(post.data.pubDate).toLocaleDateString() }}
                 </div>
               </a>
             </li>
-          ))
-        }
       </ul>
     </div>
   </div>
 </nav>
+</template>
 
-<script>
-  // @ts-ignore
-  import { PagefindUI } from "@pagefind/default-ui";
 
-  // Initialize Pagefind UI
+<script setup>
+import { onMounted } from 'vue'
+// @ts-ignore
+import { PagefindUI } from '@pagefind/default-ui'
+
+// Props
+const props = defineProps({
+  posts: {
+    type: Array,
+    default: () => []
+  },
+  categories: {
+    type: Array,
+    default: () => []
+  },
+  activePage: {
+    type: String,
+    default: '/'
+  }
+})
+
+// Emit
+const emit = defineEmits(['updatePost'])
+
+const handleClick = (id) => {
+  emit('updatePost', id)
+}
+
+onMounted(() => {
   new PagefindUI({
-    element: "#search-container",
+    element: '#search-container',
     showSubResults: true,
     showImages: false,
     pageSize: 5,
     translations: {
-      placeholder: "Search posts...",
-      zero_results: "No posts found for [SEARCH_TERM]",
+      placeholder: 'Search posts...',
+      zero_results: 'No posts found for [SEARCH_TERM]',
     },
-  });
+  })
+})
+
+
 </script>
