@@ -1,17 +1,8 @@
 ---
 import "../styles/global.css";
-import Nav from "../components/Nav.vue";
-import DarkModeToggle from "../components/DarkModeToggle.astro";
-import { getCollection } from "astro:content";
-
-// Get blog posts and categories for the Nav component
-const allPosts = await getCollection("blog");
-const categories = await getCollection("categories");
-
-let activePost: string = "";
 ---
 
-<html lang="en" class="w-full h-full overflow-hidden margin-0">
+<html lang="en" class="w-full h-full overflow-hidden margin-0 select-none">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
@@ -23,10 +14,6 @@ let activePost: string = "";
   <body
     class="flex flex-row h-screen bg-white dark:bg-gray-900 transition-colors duration-300"
   >
-    <div class="w-80 bg-gray-100 dark:bg-gray-800">
-      <DarkModeToggle class="p-4" />
-      <Nav posts={allPosts} categories={categories} client:load />
-    </div>
     <slot />
   </body>
 </html>

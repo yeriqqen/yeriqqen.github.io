@@ -37,7 +37,7 @@
         Categories
       </h3>
      <ul>
-          <li v-for="category in (categories || [])" @click="handleClick(category.id)" :key="category.id">{{ category.id }}</li>
+          <li v-for="post in (allPosts || [])" @click="handleClick(post.id)" :key="post.id">{{ post.id }}</li>
         </ul>
     </div>
 
@@ -47,7 +47,7 @@
         Recent Posts
       </h3>
       <ul class="space-y-2">
-             <li v-for="post in (posts || []).slice(0, 5)" :key="post.id">
+             <li v-for="post in (allPosts || []).slice(0, 5)" :key="post.id">
               <a
                 :href="`/blog/${post.id}`"
                 class="block px-2 py-1 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors"
@@ -72,11 +72,7 @@ import { PagefindUI } from '@pagefind/default-ui'
 
 // Props
 const props = defineProps({
-  posts: {
-    type: Array,
-    default: () => []
-  },
-  categories: {
+  allPosts: {
     type: Array,
     default: () => []
   },
