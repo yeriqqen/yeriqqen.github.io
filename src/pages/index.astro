@@ -7,7 +7,6 @@ import DarkModeToggle from "../components/DarkModeToggle.astro";
 import { getCollection, type CollectionEntry } from "astro:content";
 
 const allPosts = await getCollection("blog");
-const categories = await getCollection("categories");
 
 let activePost: CollectionEntry<"blog"> = allPosts[0]; // Default to the first post
 ---
@@ -15,7 +14,10 @@ let activePost: CollectionEntry<"blog"> = allPosts[0]; // Default to the first p
 <Layout>
   <div class="w-80 dark:bg-gray-800">
     <DarkModeToggle class="p-4" />
-    <Nav activePost={activePost} allPosts={allPosts} client:load />
+    <Nav
+      allPosts={allPosts}
+      client:load
+    />
   </div>
-  <Main post={activePost} />
+  <Main allPosts={allPosts} />
 </Layout>

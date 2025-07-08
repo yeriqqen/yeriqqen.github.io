@@ -1,9 +1,7 @@
 ---
-import { getCollection } from "astro:content";
-const allPosts = await getCollection("blog");
-import Post from "./Post.astro";
+import Post from "./Post.vue";
 
-const { post } = Astro.props;
+const { allPosts } = Astro.props;
 ---
 
 <main class="h-full p-6 overflow-y-auto">
@@ -16,7 +14,7 @@ const { post } = Astro.props;
 
   <!-- Recent Posts -->
 
-  <Post post={post} />
+  <Post client:load />
 </main>
 
 <style>
