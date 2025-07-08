@@ -49,7 +49,7 @@
         <ul class="space-y-2">
              <li v-for="post in (allPosts || []).slice(0, 5)" :key="post.id">
               <a
-                :href="`/blog/${post.id}`"
+                @click="handleClick(post)"
                 class="block px-2 py-1 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors"
               >
                 <div class="truncate">{{ post.data.title }}</div>
@@ -78,7 +78,7 @@ const props = defineProps({
 })
 
 const handleClick = (post) => {
-  sharedValue = post;
+  sharedValue.value = post;
 }
 
 
