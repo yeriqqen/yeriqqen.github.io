@@ -1,22 +1,13 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Main from "../components/Main.astro";
-import Nav from "../components/Nav.vue";
-import DarkModeToggle from "../components/DarkModeToggle.astro";
+import { Main } from "../components/Main";
+import { Nav } from "../components/Nav";
 import { getCollection, type CollectionEntry } from "astro:content";
 
 const allPosts = await getCollection("blog");
-
-let activePost: CollectionEntry<"blog"> = allPosts[0]; // Default to the first post
 ---
 
 <Layout>
-  <div class="w-80 dark:bg-gray-800">
-    <DarkModeToggle class="p-4" />
-    <Nav
-      allPosts={allPosts}
-      client:load
-    />
-  </div>
+  <Nav allPosts={allPosts} />
   <Main allPosts={allPosts} />
 </Layout>

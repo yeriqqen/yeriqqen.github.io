@@ -1,6 +1,6 @@
 <script setup>
 import { computed, watch, ref } from 'vue';
-import { sharedValue } from '../shared/sharedState.ts';
+import { sharedValue } from '../../../shared/sharedState.ts';
 import { marked } from 'marked';
 
 const post = computed(() => sharedValue.value);
