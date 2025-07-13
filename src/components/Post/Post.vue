@@ -1,6 +1,6 @@
 <script setup>
 import { computed, watch, ref } from 'vue';
-import { sharedValue } from '../../../shared/sharedState.ts';
+import { sharedValue } from '../../shared/sharedState.ts';
 import { marked } from 'marked';
 
 const post = computed(() => sharedValue.value);
@@ -14,12 +14,11 @@ const renderMarkdown = async (post) => {
     return;
   }
 
-  const cont = ref('')
+  isLoading.value = true;
+
   const res = await fetch(`blog/${post.id}.md`)
   const raw = await res.text()
   const rendered = marked(raw)
-
-  isLoading.value = true;
   
   try {
   if (post.data?.description) {
@@ -46,7 +45,7 @@ watch(post, (newPost) => {
 </script>
 
 <template>
-  <section>
+  <section class="w-full h-full rounded-full">
     <article v-if="post" class="max-w-4xl mx-auto px-6 py-8">
       <!-- Loading State -->
       <div v-if="isLoading" class="text-center py-8">
@@ -97,19 +96,18 @@ watch(post, (newPost) => {
       <!-- Post Content -->
       <div
         v-if="!isLoading"
-        class="prose prose-lg dark:prose-invert max-w-none"
-  v-html="content"
-      />
+        class="prose prose-lg dark:prose-invert max-w-none dark:text-gray-300"
+        v-html="content"
+      ></div>
     </article>
     
     <!-- Fallback when no post is selected -->
-    <div v-else class="max-w-4xl mx-auto px-6 py-8 text-center">
-      <h2 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
-        Select a Post
-      </h2>
-      <p class="text-gray-600 dark:text-gray-400">
-        Choose a post from the navigation to view its content here.
-      </p>
+    <div v-else class="w-full h-full flex items-center justify-start overflow-hidden">
+      <img
+        src="/assets/chloro.jpg"
+        alt="No post selected"
+        class="w-auto h-full object-cover"
+      />
     </div>
   </section>
 </template>

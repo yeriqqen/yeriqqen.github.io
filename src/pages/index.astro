@@ -1,13 +1,13 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { Main } from "../components/Main";
+import { Post } from "../components/Post";
 import { Nav } from "../components/Nav";
-import { getCollection, type CollectionEntry } from "astro:content";
+import { getCollection } from "astro:content";
 
 const allPosts = await getCollection("blog");
 ---
 
 <Layout>
   <Nav allPosts={allPosts} />
-  <Main allPosts={allPosts} />
+  <Post client:load/>
 </Layout>
