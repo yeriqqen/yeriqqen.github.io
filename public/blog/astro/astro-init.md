@@ -1,4 +1,5 @@
 ---
+title: "astro-init"
 description: "Explanation of astro initialization"
 pubDate: 2024-01-15
 ---

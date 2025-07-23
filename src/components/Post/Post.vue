@@ -18,11 +18,11 @@ const renderMarkdown = async (post) => {
 
   const res = await fetch(`/blog/${post.id}.md`)
    try {
-    // Use leading slash if your .md files are in public/blog/
     const res = await fetch(`/blog/${post.id}.md`);
     if (!res.ok) throw new Error('Markdown file not found');
     const raw = await res.text();
-    content.value = marked(raw); // Always render the markdown
+    const mdBody = raw.replace(/^---[\s\S]*?---/, '').trim();
+    content.value = marked(mdBody);
   } catch (error) {
     content.value = '<p>Error loading content preview.</p>';
     console.error('Error rendering markdown:', error);
