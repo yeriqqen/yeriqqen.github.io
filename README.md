@@ -10,8 +10,8 @@
   </div>
 
   <h3>If you want to clone:</h3>
-  <pre><code>git clone https://github.com/yeriqqen/blog.git
-cd blog
+  <pre><code>git clone https://github.com/yeriqqen/yeriqqen.github.io.git
+cd yeriqqen.github.io
 npm install
 npm run dev
 </code></pre>
