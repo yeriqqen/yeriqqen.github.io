@@ -1,8 +1,6 @@
 ---
-title: "Getting Started with Astro and Modern Web Development"
-description: "A comprehensive guide to building modern static sites with Astro, covering content collections, static generation, and best practices."
+description: "Explanation of astro initialization"
 pubDate: 2024-01-15
-featured: true
 ---
 
 # Getting Started with Astro and Modern Web Development

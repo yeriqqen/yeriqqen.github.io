@@ -16,23 +16,20 @@ const renderMarkdown = async (post) => {
 
   isLoading.value = true;
 
-  const res = await fetch(`blog/${post.id}.md`)
-  const raw = await res.text()
-  const rendered = marked(raw)
-  
-  try {
-  if (post.data?.description) {
-    content.value = rendered
-  } else {
-    content.value = '<p>Content preview not available.</p>'
+  const res = await fetch(`/blog/${post.id}.md`)
+   try {
+    // Use leading slash if your .md files are in public/blog/
+    const res = await fetch(`/blog/${post.id}.md`);
+    if (!res.ok) throw new Error('Markdown file not found');
+    const raw = await res.text();
+    content.value = marked(raw); // Always render the markdown
+  } catch (error) {
+    content.value = '<p>Error loading content preview.</p>';
+    console.error('Error rendering markdown:', error);
+  } finally {
+    isLoading.value = false;
   }
-} catch (error) {
-  content.value = '<p>Error loading content preview.</p>'
-  console.error('Error rendering markdown:', error);
-} finally {
-  isLoading.value = false
-}
-}
+};
 
 // Watch for changes in the selected post
 watch(post, (newPost) => {
@@ -45,7 +42,7 @@ watch(post, (newPost) => {
 </script>
 
 <template>
-  <section class="w-full h-full rounded-full">
+  <section class="w-full h-full overflow-auto">
     <article v-if="post" class="max-w-4xl mx-auto px-6 py-8">
       <!-- Loading State -->
       <div v-if="isLoading" class="text-center py-8">
@@ -78,19 +75,8 @@ watch(post, (newPost) => {
         <h1
           class="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4 leading-tight"
         >
-          {{ post.data?.title || post.id }}
+          {{ post.id }}
         </h1>
-
-        <!-- Tags -->
-        <div v-if="post.data?.tags && post.data.tags.length > 0" class="flex flex-wrap gap-2 mb-6">
-          <span 
-            v-for="tag in post.data.tags" 
-            :key="tag"
-            class="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded text-sm"
-          >
-            {{ tag }}
-          </span>
-        </div>
       </header>
 
       <!-- Post Content -->
