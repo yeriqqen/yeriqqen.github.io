@@ -7,6 +7,11 @@ const post = computed(() => sharedValue.value);
 const content = ref('');
 const isLoading = ref(false);
 
+// Function to go back to home (clear selected post)
+const goHome = () => {
+  sharedValue.value = null;
+};
+
 // Function to render markdown content
 const renderMarkdown = async (post) => {
   if (!post || !post.id) {
@@ -42,7 +47,21 @@ watch(post, (newPost) => {
 </script>
 
 <template>
-  <section class="w-full h-full overflow-auto">
+  <!-- Mobile view: show only when post is selected -->
+  <section class="md:w-full md:h-full md:overflow-auto w-full h-full overflow-auto" :class="{ 'hidden md:block': !post, 'block': post }">
+    <!-- Mobile Home Button - only show on small screens when post is selected -->
+    <div v-if="post" class="md:hidden sticky top-0 z-10 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 p-4">
+      <button 
+        @click="goHome"
+        class="flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200 transition-colors"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+        </svg>
+        <span class="font-medium">Home</span>
+      </button>
+    </div>
+
     <article v-if="post" class="max-w-4xl mx-auto px-6 py-8">
       <!-- Loading State -->
       <div v-if="isLoading" class="text-center py-8">
@@ -87,8 +106,8 @@ watch(post, (newPost) => {
       ></div>
     </article>
     
-    <!-- Fallback when no post is selected -->
-    <div v-else class="w-full h-full flex items-center justify-start overflow-hidden">
+    <!-- Fallback when no post is selected - only show on desktop -->
+    <div v-else class="hidden md:flex w-full h-full items-center justify-start overflow-hidden">
       <img
         src="/assets/chloro.jpg"
         alt="No post selected"

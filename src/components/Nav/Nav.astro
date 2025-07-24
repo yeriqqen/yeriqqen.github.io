@@ -6,8 +6,52 @@ const { allPosts } = Astro.props;
 ---
 
 <nav
-  class="w-[30%] h-full p-4 border-r border-gray-200 dark:border-gray-700 text-black dark:text-white"
+  class="w-full md:w-[30%] h-full p-4 border-r-0 md:border-r border-gray-200 dark:border-gray-700 text-black dark:text-white md:block"
+  id="nav-container"
 >
   <DarkModeToggle />
   <PostsView allPosts={allPosts} client:load />
 </nav>
+
+<script>
+  import { sharedValue } from "../../shared/sharedState.ts";
+  
+  // Function to handle responsive navigation visibility
+  const updateNavVisibility = () => {
+    const nav = document.getElementById('nav-container');
+    if (nav) {
+      // On mobile screens, hide nav when post is selected
+      if (window.innerWidth < 768) { // md breakpoint
+        if (sharedValue.value) {
+          nav.classList.add('hidden');
+        } else {
+          nav.classList.remove('hidden');
+        }
+      } else {
+        // Always show on desktop
+        nav.classList.remove('hidden');
+      }
+    }
+  };
+
+  // Watch for changes in shared value
+  const observer = {
+    callback: updateNavVisibility
+  };
+
+  // Initial check
+  updateNavVisibility();
+
+  // Listen for window resize
+  window.addEventListener('resize', updateNavVisibility);
+
+  // Watch sharedValue changes - we'll use a simple polling approach
+  // since we can't easily set up Vue reactivity in Astro component script
+  let lastValue = sharedValue.value;
+  setInterval(() => {
+    if (sharedValue.value !== lastValue) {
+      lastValue = sharedValue.value;
+      updateNavVisibility();
+    }
+  }, 100);
+</script>
