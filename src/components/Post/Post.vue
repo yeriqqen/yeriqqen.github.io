@@ -48,7 +48,7 @@ watch(post, (newPost) => {
 
 <template>
   <!-- Mobile view: show only when post is selected -->
-  <section class="md:w-full md:h-full md:overflow-auto w-full h-full overflow-auto" :class="{ 'hidden md:block': !post, 'block': post }">
+  <section class=" w-full h-full overflow-x-hidden" :class="{ 'hidden md:block': !post, 'block': post }">
     <!-- Mobile Home Button - only show on small screens when post is selected -->
     <div v-if="post" class="md:hidden sticky top-0 z-10 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 p-4">
       <button 
