@@ -13,6 +13,7 @@ Attribute binding:
 
 same as:
 
+
 ```html
 <div :src='image'></div>
 ```

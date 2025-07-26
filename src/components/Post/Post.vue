@@ -3,6 +3,12 @@ import { computed, watch, ref } from 'vue';
 import { sharedValue } from '../../shared/sharedState.ts';
 import { marked } from 'marked';
 
+// Configure marked options for better line break handling
+marked.setOptions({
+  breaks: true, // Convert '\n' in paragraphs into <br>
+  gfm: true,    // GitHub Flavored Markdown
+});
+
 const post = computed(() => sharedValue.value);
 const content = ref('');
 const isLoading = ref(false);

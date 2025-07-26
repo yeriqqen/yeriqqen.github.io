@@ -1,3 +1,37 @@
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
+
+/* Prevent overscroll and ensure proper scroll behavior */
+html, body {
+  overscroll-behavior: none;
+  overflow: hidden;
+  height: 100%;
+  position: fixed;
+  width: 100%;
+  -webkit-overflow-scrolling: touch;
+  /* Prevent rubber band scrolling on iOS */
+  touch-action: manipulation;
+}
+
+/* Allow scrolling only in designated containers */
+.scrollable {
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  /* Ensure proper scrolling on mobile devices */
+  scroll-behavior: smooth;
+}
+
+/* Prevent body scroll when modal or overlay is open */
+.no-scroll {
+  overflow: hidden !important;
+}
+
+/* Better spacing for markdown content */
+.prose pre {
+  margin: 1.5em 0 !important;
+}
+
+.prose p {
+  margin-bottom: 1em !important;
+}
