@@ -1,3 +1,10 @@
+---
+title: "vue v-bind:"
+description: "Atrribue binding"
+pubDate: 2025-07-26
+featured: false
+---
+
 Attribute binding:
 
 ```html
