@@ -4,6 +4,7 @@ description: "Content Collections"
 pubDate: 2025-07-20
 ---
 ## Content Collections
+
 ```typescript
 // src/content/config.ts
 import { defineCollection, z } from "astro:content";
