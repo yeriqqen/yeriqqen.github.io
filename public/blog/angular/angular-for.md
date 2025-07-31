@@ -1,6 +1,6 @@
 ---
-title: "angular services"
-description: "Angular services"
+title: "angular @for"
+description: "Angular @for"
 pubDate: 2025-07-31
 featured: false
 ---
