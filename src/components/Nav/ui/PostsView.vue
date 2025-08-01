@@ -2,11 +2,26 @@
 import { ref } from 'vue'
 import { sharedValue } from '../../../shared/sharedState.ts'
 
+const toggledCategory = ref(null);
+
+const togglePosts = (category) => {
+  if (toggledCategory.value === category.id) {
+    toggledCategory.value = null;
+  } else {
+    toggledCategory.value = category.id;
+  }
+};
+
+
 const props = defineProps({
   allPosts: {
     type: Array,
     default: () => []
   },
+  categories: {
+    type: Array,
+    default: () => []
+  }
 })
 
 const recentlyViewed = ref([])
@@ -38,9 +53,14 @@ const handleClick = (post) => {
         <h3 class="text-sm text-center font-medium uppercase tracking-wider mb-2">
         All Posts
         </h3>
-        <ul>
-          <li class="hover:cursor-pointer" v-for="post in (allPosts || [])" @click="handleClick(post)" :key="post.id">{{ post.id }}</li>
-        </ul>
+        <ol>
+          <li class="hover:cursor-pointer" v-for="category in (categories || [])" @click="togglePosts(category)" :key="category.id">
+            {{ category.id }}
+            <ol v-if="toggledCategory === category.id" class="pl-4">
+              <li class="hover:cursor-pointer" v-for="post in (allPosts || []).filter(p => p.id.startsWith(category.id + '/'))" @click="handleClick(post)" :key="post.id">{{ post.id }}</li>
+            </ol>
+          </li>
+        </ol>
       </div>
 
       <!-- Recent Posts Section -->

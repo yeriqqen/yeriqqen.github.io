@@ -5,9 +5,10 @@ import { Nav } from "../components/Nav";
 import { getCollection } from "astro:content";
 
 const allPosts = await getCollection("blog");
+const categories = await getCollection("categories");
 ---
 
 <Layout>
-  <Nav allPosts={allPosts} />
+  <Nav allPosts={allPosts} categories={categories} />
   <Post client:load/>
 </Layout>

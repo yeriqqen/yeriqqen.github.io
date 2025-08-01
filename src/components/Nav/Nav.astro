@@ -2,7 +2,9 @@
 import { DarkModeToggle } from "./ui";
 import { PostsView } from "./ui";
 
+
 const { allPosts } = Astro.props;
+const { categories } = Astro.props;
 ---
 
 <nav
@@ -10,7 +12,7 @@ const { allPosts } = Astro.props;
   id="nav-container"
 >
   <DarkModeToggle />
-  <PostsView allPosts={allPosts} client:load />
+  <PostsView allPosts={allPosts} categories={categories} client:load />
 </nav>
 
 <script>
