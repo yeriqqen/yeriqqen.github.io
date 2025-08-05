@@ -34,4 +34,11 @@ Folders inside 📂 pages are called slices. They divide the layer by domain (in
 
 Folders inside 📂 app, 📂 shared, and 📂 pages/article-reader are called segments, and they divide slices (or layers) by technical purpose, i.e. what the code is for.
 
-https://feature-sliced.design/assets/images/visual_schema-e826067f573946613dcdc76e3f585082.jpg
+![visual_schema-e826067f573946613dcdc76e3f585082](https://github.com/user-attachments/assets/84890549-69e0-4d55-9fb7-e38a0c37e4ed)
+
+App — everything that makes the app run — routing, entrypoints, global styles, providers.
+Pages — full pages or large parts of a page in nested routing.
+Widgets — large self-contained chunks of functionality or UI, usually delivering an entire use case.
+Features — reused implementations of entire product features, i.e. actions that bring business value to the user.
+Entities — business entities that the project works with, like user or product.
+Shared — reusable functionality, especially when it's detached from the specifics of the project/business, though not necessarily.
