@@ -17,3 +17,5 @@ pubDate: 2026-03-05
 ## Waterfall model
 
 <img width="1224" height="714" alt="Screenshot 2026-03-10 at 11 02 33 AM" src="https://github.com/user-attachments/assets/286c88df-1bcc-4750-a4f1-6ac963740c73" />
+
+## Spiral model
