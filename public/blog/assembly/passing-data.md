@@ -18,7 +18,7 @@ void multstore
 }
 ```
 
-```s
+```as
 0000000000400540 <multstore>:
     #x in %rdi, y in %rsi, dest in %rdx
     #...
@@ -37,7 +37,7 @@ long mult2
 }
 ```
 
-```s
+```as
 0000000000400550 <mult2>:
     # a in %rdi, b in %rsi
     400550: mov     %rdi,%rax   # a

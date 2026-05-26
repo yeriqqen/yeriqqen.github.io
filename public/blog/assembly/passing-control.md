@@ -10,11 +10,11 @@ Stack is used to support call and return
 %rip - register containing current instruction
 
 Call:
-```s
+```as
 callq label
 ```
 equivalent, but not same sequence
-```s
+```as
 pushq %rip+7
 # Save return address (address of next instruction)
 jmp label
@@ -24,7 +24,7 @@ Push return address on stack
 Jump to label
 
 Return:
-```s
+```as
 ret
 ```
 Pop address from the stack
